@@ -7,7 +7,7 @@
 
 void
 main(void) {
-  int estado = open("no-existe.txt", O_RDONLY);
+  int estado = open("../data/no-existe.txt", O_RDONLY);
 
   if (estado < 0) {
     fprintf(stderr, "Error abriendo fichero debido a %d\n", errno);
@@ -15,7 +15,7 @@ main(void) {
 
   errno = 0;
 
-  estado = open("existe.txt", O_RDONLY);
+  estado = open("../data/existe.txt", O_RDONLY);
 
   if (estado < 0) {
     fprintf(stderr, "Error abriendo fichero debido a %d\n", errno);
