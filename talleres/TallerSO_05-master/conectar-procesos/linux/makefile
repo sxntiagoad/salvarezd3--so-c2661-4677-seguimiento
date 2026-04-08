@@ -8,7 +8,8 @@ all: ${EXECS}
 
 conectar-procesos: conectar-procesos.o
 	${CC} -o $@ $<
-
+eco: eco.c
+	gcc eco.c -o eco
 clean:
 	rm -f ${OBJS}
 	rm -f ${EXECS}

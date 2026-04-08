@@ -1,0 +1,5 @@
+hola
+mundo
+prueba
+texto
+linux
