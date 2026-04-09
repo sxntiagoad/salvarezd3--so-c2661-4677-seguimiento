@@ -13,3 +13,5 @@ clean:
 	rm -f ${OBJS}
 	rm -f ${EXECS}
 	rm -f *~
+servidor3: servidor3.c
+	cc -o servidor3 servidor3.c

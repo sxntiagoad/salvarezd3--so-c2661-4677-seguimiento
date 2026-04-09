@@ -30,3 +30,8 @@ clean:
 	rm -f ${OBJS}
 	rm -f ${EXECS}
 	rm -f *~
+servidor2: servidor2.c
+	cc -o servidor2 servidor2.c
+
+cliente2: cliente2.c
+	cc -o cliente2 cliente2.c
