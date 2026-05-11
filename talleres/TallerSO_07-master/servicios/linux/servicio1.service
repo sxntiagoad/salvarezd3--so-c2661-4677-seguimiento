@@ -1,0 +1,9 @@
+[Unit]
+Description=Servicio1
+
+[Service]
+ExecStart=/usr/local/bin/servicio1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

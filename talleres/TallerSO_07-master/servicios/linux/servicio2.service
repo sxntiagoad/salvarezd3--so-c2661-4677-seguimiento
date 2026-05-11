@@ -1,0 +1,11 @@
+[Unit]
+Description=Servicio2 - contador de senales
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/servicio2
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target

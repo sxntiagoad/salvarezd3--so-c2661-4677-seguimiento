@@ -1,21 +1,27 @@
-SRCS=systemd-service.c
-OBJS=$(SRCS:.c=.o)
-EXECS=$(OBJS:.o=)
-INSTALLDIR=/usr/local/bin
+CC=gcc
 
-all: ${EXECS}
+all:
+	$(CC) systemd-service.c -o systemd-service
+	$(CC) servicio1.c -o servicio1
+	$(CC) cliente1.c  -o cliente1
+	$(CC) servicio2.c -o servicio2
 
-systemd-service: systemd-service.o
+install:
+	cp systemd-service /usr/local/bin/
+	cp systemd-service.service /etc/systemd/system/
 
-systemd-service.o: systemd-service.c
+	cp servicio1 /usr/local/bin/
+	cp servicio1.service /etc/systemd/system/
 
-install: systemd-service systemd-service.service
-	install $< -t ${INSTALLDIR}
-	cp systemd-service.service /etc/systemd/system/systemd-service.service
+	cp servicio2 /usr/local/bin/
+	cp servicio2.service /etc/systemd/system/
+
+	systemctl daemon-reload
+	systemctl enable servicio1
+	systemctl enable servicio2
 
 clean:
-	rm -f ${OBJS}
-	rm -f ${EXECS}
-	rm -f *~
-
-.phony: clean
+	rm -f systemd-service
+	rm -f servicio1
+	rm -f cliente1
+	rm -f servicio2

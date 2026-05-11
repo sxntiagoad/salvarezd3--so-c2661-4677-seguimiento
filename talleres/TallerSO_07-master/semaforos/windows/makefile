@@ -1,53 +1,72 @@
-.phony: clean
+.PHONY: clean all
 
-SRCS=jardin_ornamental.c jardin_utilidades.c jardin_limitado_ornamental.c \
-jardin_limitado_utilidades.c agente.c fumador.c fumadores_utilidad.c \
-jardin_ornamental_limitado.c ctrl_fumadores.c
-OBJS=$(SRCS:.c=.o)
-EXECS=jardin_ornamental jardin_ornamental_limitado agente fumador ctrl_fumadores
+CC=gcc
+CFLAGS=-Wall
+LDLIBS=
+
+EXECS=jardin_ornamental.exe jardin_ornamental_limitado.exe jardin_ornamental_general.exe \
+      agente.exe fumador.exe ctrl_fumadores.exe \
+      agente2.exe fumadores2.exe ctrl_fumadores2.exe
 
 all: ${EXECS}
 
-jardin_ornamental: jardin_ornamental.o jardin_utilidades.o
-	${CC} -o $@ $^
-
+# --- Jardin sin limite ---
+jardin_ornamental.exe: jardin_ornamental.o jardin_utilidades.o
+	${CC} -o $@ $^ ${LDLIBS}
 jardin_ornamental.o: jardin_ornamental.c jardin_ornamental.h
-	${CC} -c $<
-
+	${CC} ${CFLAGS} -c $<
 jardin_utilidades.o: jardin_utilidades.c jardin_ornamental.h
-	${CC} -c $<
+	${CC} ${CFLAGS} -c $<
 
-jardin_ornamental_limitado: jardin_ornamental_limitado.o jardin_limitado_utilidades.o
-	${CC} -o $@ $^
-
+# --- Jardin limitado ---
+jardin_ornamental_limitado.exe: jardin_ornamental_limitado.o jardin_limitado_utilidades.o
+	${CC} -o $@ $^ ${LDLIBS}
 jardin_ornamental_limitado.o: jardin_ornamental_limitado.c jardin_ornamental_limitado.h
-	${CC} -c $<
-
+	${CC} ${CFLAGS} -c $<
 jardin_limitado_utilidades.o: jardin_limitado_utilidades.c jardin_ornamental_limitado.h
-	${CC} -c $<
+	${CC} ${CFLAGS} -c $<
 
-agente: agente.o fumadores_utilidad.o
+# --- Ejercicio 4: jardin general ---
+jardin_ornamental_general.exe: jardin_ornamental_general.o jardin_ornamental_utilidades_general.o
+	${CC} -o $@ $^ ${LDLIBS}
+jardin_ornamental_general.o: jardin_ornamental_general.c jardin_ornamental_general.h
+	${CC} ${CFLAGS} -c $<
+jardin_ornamental_utilidades_general.o: jardin_ornamental_utilidades_general.c jardin_ornamental_general.h
+	${CC} ${CFLAGS} -c $<
+
+# --- Fumadores originales ---
+agente.exe: agente.o fumadores_utilidad.o
 	${CC} -o $@ $^
-
 agente.o: agente.c fumadores.h
-	${CC} -c $<
-
-fumador: fumador.o fumadores_utilidad.o
+	${CC} ${CFLAGS} -c $<
+fumador.exe: fumador.o fumadores_utilidad.o
 	${CC} -o $@ $^
-
 fumador.o: fumador.c fumadores.h
-	${CC} -c $<
-
-ctrl_fumadores: ctrl_fumadores.o fumadores_utilidad.o
+	${CC} ${CFLAGS} -c $<
+ctrl_fumadores.exe: ctrl_fumadores.o fumadores_utilidad.o
 	${CC} -o $@ $^
-
 ctrl_fumadores.o: ctrl_fumadores.c fumadores.h
-	${CC} -c $<
-
+	${CC} ${CFLAGS} -c $<
 fumadores_utilidad.o: fumadores_utilidad.c fumadores.h
-	${CC} -c $<
+	${CC} ${CFLAGS} -c $<
+
+# --- Ejercicio 6: fumadores refactorizados ---
+agente2.exe: agente2.o fumadores_utilidad2.o
+	${CC} -o $@ $^
+agente2.o: agente2.c fumadores2.h
+	${CC} ${CFLAGS} -c $<
+fumadores2.exe: fumadores2.o fumadores_utilidad2.o
+	${CC} -o $@ $^
+fumadores2.o: fumadores2.c fumadores2.h
+	${CC} ${CFLAGS} -c $<
+ctrl_fumadores2.exe: ctrl_fumadores2.o fumadores_utilidad2.o
+	${CC} -o $@ $^
+ctrl_fumadores2.o: ctrl_fumadores2.c fumadores2.h
+	${CC} ${CFLAGS} -c $<
+fumadores_utilidad2.o: fumadores_utilidad2.c fumadores2.h
+	${CC} ${CFLAGS} -c $<
 
 clean:
-	rm -f ${OBJS}
+	rm -f *.o
 	rm -f ${EXECS}
 	rm -f *~
